@@ -17,6 +17,17 @@ label.required::before {
 {% block body %}
     <div class="container">
         <br><h2 style="color: #666666">添加用户信息</h2><br>
+
+        {% if successmessage %}
+            <span class="message"><div class="alert alert-success" role="alert">{{ successmessage }}</div></span>
+        {% endif %}
+        {% if warningmessage %}
+            <span class="message"><div class="alert alert-warning" role="alert">{{ warningmessage }}</div></span>
+        {% endif %}
+        {% if errormessage %}
+            <span class="message"><div class="alert alert-danger" role="alert">{{ errormessage }}</div></span>
+        {% endif %}
+
         <form action="" method="post">
             {# CSRF跨站请求伪造 #}
             {# 添加CSRF防护的隐含参数Token,这是必须配置内容,并不是可选,注意使用render来渲染页面 #}

@@ -12,13 +12,15 @@ def adduser(request):
         form = UserForm(request.POST)
 
         if form.is_valid():
+            users_list = []
             s = User(username=request.POST.get('username'),
                      password=request.POST.get('password'),
                      sex=request.POST.get('sex'),
                      )
             s.save()
-
-            return HttpResponseRedirect('/showuser')
+            for i in User.objects.values():
+                users_list.append(i)
+            return render(request, 'showuser.html', {'users_list':users_list, 'successmessage':'已成功添加用户'})
         else:
             return render(request, 'adduser.html', {'form':form})
     else:
@@ -34,9 +36,16 @@ def showuser(request):
     return render(request, 'showuser.html', {'users_list':users_list})
 
 def deleteuser(request, id):
-    d = User.objects.all().get(id=id)
-    d.delete()
-    return HttpResponseRedirect("/showuser")
+    users_list = []
+    try:
+        d = User.objects.all().get(id=id)
+        d.delete()
+        for i in User.objects.values():
+            users_list.append(i)
+        return render(request, 'showuser.html', {'users_list':users_list, 'successmessage':'已成功删除用户'})
+    except User.DoesNotExist:
+        return render(request, "showuser.html", {'students_list': users_list, 'errormessage': '用户不存在!'})
+
 
 def edituser(request, id):
     if request.method == 'POST':

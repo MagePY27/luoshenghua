@@ -15,6 +15,15 @@
 {% block body %}
     <div class="container-fluid">
         <br><h2 style="color: #666666">用户信息查询</h2><br>
+        {% if successmessage %}
+            <span class="message"><div class="alert alert-success" role="alert">{{ successmessage }}</div></span>
+        {% endif %}
+        {% if warningmessage %}
+            <span class="message"><div class="alert alert-warning" role="alert">{{ warningmessage }}</div></span>
+        {% endif %}
+        {% if errormessage %}
+            <span class="message"><div class="alert alert-danger" role="alert">{{ errormessage }}</div></span>
+        {% endif %}
     {# 创建显示用户信息的Table,注意id="myTable", 后续DataTable JavaScript就对这个ID的Table进行渲染优化 #}
     <table class="table table-bordered" id="myTable">
       <thead class="thead-dark">
